@@ -1,5 +1,6 @@
 var https = require('https');
 var querystring = require('querystring');
+var Ticker = require('../models/ticker');
 
 exports.test = function (req, res) {
     var page = req.query.page;
@@ -18,6 +19,18 @@ exports.test = function (req, res) {
         method: 'GET'
     }
 
+    // Ticker.get({}, function (err, ticker) {
+    //     if (err) {
+    //         console.log(err);
+    //         return false;
+    //     }
+
+    //     if (ticker) {
+    //         console.log(ticker);
+    //         return true;
+    //     }
+    // });
+
     var _data = "";
     var _req = https.request(options, function (_res) {
         _res.setEncoding('utf-8');
@@ -33,4 +46,5 @@ exports.test = function (req, res) {
         console.error(err);
     });
     _req.end();
+    // return res.status(200).json(data);
 }

@@ -2,7 +2,7 @@
   <div id="main">
     <div id="header" class="clearfix">
       <div>
-        <div id="logo">qvbe</div>
+        <div id="logo">SuperPass</div>
         <ul class="clearfix">
           <!-- <li>Qvbe 100 Index</li> -->
           <li>Market Price</li>
@@ -99,18 +99,24 @@ export default {
   },
   methods: {
     async initData () {
-      let res = await axios.get('//127.0.0.1:3000/api/ticker', {
+      let res = await axios.get('//192.168.10.69:3000/api/ticker', {
         params: {
           page: 1,
           size: 100
-        }
+        },
+        timeout: 4900
       }).then(function (response) {
         return response.data
       }).catch(function (error) {
         console.log(error)
       })
+
+      if (!res) {
+        console.log('network error')
+        return false
+      }
       let currentItems = this.items
-      if (currentItems.length > 0) {
+      if (!!currentItems && currentItems.length > 0) {
         res.data.list.map(function (item, index, arr) {
           let diffPrice = item.price_usd - currentItems[index].price_usd
           if (diffPrice > 0) {
@@ -123,11 +129,11 @@ export default {
           return item
         })
       }
+      this.items = res.data.list
       // function sortId (a, b) {
       //   return a['24h_volume_rank'] - b['24h_volume_rank']
       // }
       // res.data.list.sort()
-      this.items = res.data.list
     }
   }
 }
@@ -155,7 +161,7 @@ export default {
   /* background-size: auto 30px; */
   /* background-position: left center; */
   height: 60px;
-  width: 200px;
+  width: 250px;
   margin-left: 20px;
   background-repeat: no-repeat;
   float: left;
@@ -163,7 +169,7 @@ export default {
   line-height: 60px;
   font-weight: 700;
   letter-spacing: 4px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-style: oblique;
   text-align: center;
 
