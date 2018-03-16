@@ -4,11 +4,11 @@
       <div>
         <div id="logo">qvbe</div>
         <ul class="clearfix">
-          <li>Qvbe 100 Index</li>
+          <!-- <li>Qvbe 100 Index</li> -->
           <li>Market Price</li>
-          <li>Public</li>
-          <li>Exchange</li>
-          <li>Notice</li>
+          <!-- <li>Public</li> -->
+          <!-- <li>Exchange</li> -->
+          <!-- <li>Notice</li> -->
         </ul>
       </div>
     </div>
@@ -141,7 +141,8 @@ export default {
 }
 
 #main #header {
-  background-color: #1C1F24;
+  /* background-color: #1C1F24; */
+  background-color: #273c61;
   height: 60px;
   padding: 0 auto;
 }
@@ -173,7 +174,8 @@ export default {
   list-style: none;
 }
 #main #header > div ul li {
-  color: #D6D6D6;
+  /* color: #D6D6D6; */
+  color: #fff;
   height: 60px;
   line-height: 60px;
   padding: 0 20px;
@@ -184,8 +186,9 @@ export default {
   cursor: pointer;
 }
 #main #header > div ul li:hover {
-  background-color: #27282B;
-  color: white;
+  /* background-color: #27282B; */
+  background-color: #061c41;
+  /* color: #fff; */
 }
 #main #header > div ul li.selected {
   border-bottom: solid 3px #F1F1F1;
@@ -260,7 +263,7 @@ ul > li {
   font-size: 14px;
 }
 ul > li:hover {
-  background-color: #333539;
+  /* background-color: #333539; */
 }
 ul > li:first-child {
   border-radius: 4px 4px 0 0;
@@ -332,7 +335,8 @@ a {
   text-align: right;
 }
 .price-up {
-  color: #73fb4c;
+  /* color: #73fb4c; */
+  color: #3CBC6C;
 }
 .price-down {
   color: #d26966;
@@ -369,14 +373,16 @@ a {
 }
 #content table {
   width: 100%;
-  background: #2a2c30;
+  /* background: #2a2c30; */
+  background: #fff;
   border-radius: 4px;
   border: none;
   border-collapse: separate;
   border-spacing: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  color: rgba(255, 255, 255, 0.9);
+  /* color: rgba(255, 255, 255, 0.9); */
+  color: rgba(0, 0, 0);
   overflow: hidden;
 }
 #content table thead {
@@ -388,10 +394,13 @@ a {
 }
 #content table thead tr th {
   font-weight: 700;
-  background-color: #1d2934;
+  /* background-color: #1d2934; */
+  background-color: #fff;
   padding: .7em .7em;
-  border-bottom: solid 1px #49515c;
-  border-left: solid 1px #49515c;
+  /* border-bottom: solid 1px #49515c; */
+  /* border-left: solid 1px #49515c; */
+  border-bottom: solid 1px #e4ebf0;
+  border-left: solid 1px #e4ebf0;
 }
 #content table thead tr th:first-child {
   border-left: none;
@@ -419,12 +428,15 @@ a {
   border-top: none;
 }
 #content table tbody tr:hover {
-  background-color: #333539;
+  /* background-color: #333539; */
+  background-color: #f8f8f8;
 }
 #content table tbody tr td {
   padding: 6px;
-  border-left: solid 1px #1e2228;
-  border-top: solid 1px #1e2228;
+  /* border-left: solid 1px #1e2228; */
+  /* border-top: solid 1px #1e2228; */
+  border-left: solid 1px #e4ebf0;
+  border-top: solid 1px #e4ebf0;
 }
 #content table tbody tr td:first-child {
   border-left: none;

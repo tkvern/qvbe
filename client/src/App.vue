@@ -25,7 +25,7 @@ body {
     padding: 0;
     font-size: 12px;
     color: #FFFFFF;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 #app {
