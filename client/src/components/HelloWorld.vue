@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     async initData () {
-      let res = await axios.get('//192.168.10.69:3000/api/ticker', {
+      let res = await axios.get('//superpass.ai//api/ticker', {
         params: {
           page: 1,
           size: 100
