@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+// var mongodb = require('./db');
 
 function Ticker(ticker) {
     this._id = ticker._id;
@@ -24,26 +24,26 @@ function Ticker(ticker) {
 module.exports = Ticker;
 
 // get data list
-Ticker.get = function(name, callback) {
-    mongodb.open(function (err, db) {
-        if (err) {
-            return callback(err);
-        }
+// Ticker.get = function(name, callback) {
+//     mongodb.open(function (err, db) {
+//         if (err) {
+//             return callback(err);
+//         }
 
-        db.collection('tickers', function (err, collection) {
-            if (err) {
-                mongodb.close();
-                return callback(err);
-            }
+//         db.collection('tickers', function (err, collection) {
+//             if (err) {
+//                 mongodb.close();
+//                 return callback(err);
+//             }
 
-            collection.find({}, function (err, ticker) {
-                mongodb.close();
-                if (err) {
-                    return callback(err);
-                }
+//             collection.find({}, function (err, ticker) {
+//                 mongodb.close();
+//                 if (err) {
+//                     return callback(err);
+//                 }
 
-                callback(callback, ticker);
-            });
-        });
-    });
-};
+//                 callback(callback, ticker);
+//             });
+//         });
+//     });
+// };
