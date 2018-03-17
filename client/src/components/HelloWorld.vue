@@ -148,6 +148,7 @@ export default {
 
 #main #header {
   /* background-color: #1C1F24; */
+  min-width: 1400px;
   background-color: #273c61;
   height: 60px;
   padding: 0 auto;
