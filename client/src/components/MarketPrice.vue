@@ -66,6 +66,7 @@
 <script>
 import axios from 'axios'
 import localStorage from '@/lib/localStorage'
+import Config from '../config'
 
 export default {
   name: 'MarketPrice',
@@ -95,7 +96,7 @@ export default {
   },
   methods: {
     async initData () {
-      let res = await axios.get('//superpass.ai/api/ticker', {
+      let res = await axios.get(Config.domain + '/api/ticker', {
         params: {
           page: 1,
           size: 100
@@ -111,21 +112,26 @@ export default {
         console.log('network error')
         return false
       }
+
       let currentItems = this.items
-      if (!!currentItems && currentItems.length > 0) {
-        res.data.list.map(function (item, index, arr) {
-          let diffPrice = item.price_usd - currentItems[index].price_usd
-          if (diffPrice > 0) {
-            item.prcie_change_status = 'up'
-          } else if (diffPrice < 0) {
-            item.prcie_change_status = 'down'
-          } else {
-            item.prcie_change_status = ''
-          }
-          return item
-        })
+
+      if (!res['data'] || !res.data['list'] || !currentItems || currentItems.length <= 0) {
+        return
       }
-      this.items = res.data.list
+      res.data['list'].map(function (item, index, arr) {
+        let diffPrice = item.price_usd - currentItems[index].price_usd
+        if (diffPrice > 0) {
+          item.prcie_change_status = 'up'
+        } else if (diffPrice < 0) {
+          item.prcie_change_status = 'down'
+        } else {
+          item.prcie_change_status = ''
+        }
+        return item
+      })
+      if (res.data['list'] !== undefined) {
+        this.items = res.data['list']
+      }
       // function sortId (a, b) {
       //   return a['24h_volume_rank'] - b['24h_volume_rank']
       // }

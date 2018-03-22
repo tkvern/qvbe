@@ -3,6 +3,8 @@ export default {
     return JSON.parse(window.localStorage.getItem(key) || '[]')
   },
   save (key, value) {
-    window.localStorage.setItem(key, JSON.stringify(value))
+    if (value !== undefined) {
+      window.localStorage.setItem(key, JSON.stringify(value))
+    }
   }
 }

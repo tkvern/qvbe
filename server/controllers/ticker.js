@@ -3,7 +3,11 @@ var querystring = require('querystring');
 var Ticker = require('../models/Ticker');
 
 exports.test = function (req, res) {
-    return res.status(200).json(req.query);
+    return res.status(200).json({
+        // data: {
+        //     query: req.query
+        // }
+    });
 
     // Ticker.get({}, function (err, ticker) {
     //     if (err) {
