@@ -16,7 +16,7 @@ function Ticker(ticker) {
     this.percent_change_1h = ticker.percent_change_1h;
     this.percent_change_7d = ticker.percent_change_7d;
     this.percent_change_24h = ticker.percent_change_24h;
-    this.high_price_24h = ticker.high_price_24h;
+    this.high_price_24h = ticker.high·_price_24h;
     this.low_price_24h = ticker.low_price_24h;
     this.last_updated = ticker.last_updated;
 }
@@ -24,26 +24,6 @@ function Ticker(ticker) {
 module.exports = Ticker;
 
 // get data list
-// Ticker.get = function(name, callback) {
-//     mongodb.open(function (err, db) {
-//         if (err) {
-//             return callback(err);
-//         }
-
-//         db.collection('tickers', function (err, collection) {
-//             if (err) {
-//                 mongodb.close();
-//                 return callback(err);
-//             }
-
-//             collection.find({}, function (err, ticker) {
-//                 mongodb.close();
-//                 if (err) {
-//                     return callback(err);
-//                 }
-
-//                 callback(callback, ticker);
-//             });
-//         });
-//     });
-// };
+Ticker.get = function(name, callback) {
+    
+};

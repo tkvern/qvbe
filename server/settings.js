@@ -1,15 +1,12 @@
 function Config(config) {
-    return {
-        cookieSecret : config.cookieSecret,
-        db : config.db,
-        host : config.host,
-        port : config.port,
-        url : 'mongodb://' + config.host + ':' + config.port
-    };
+    this.cookieSecret = config.cookieSecret,
+    this.db = config.db,
+    this.host = config.host,
+    this.port = config.port,
+    this.url = 'mongodb://' + config.host + ':' + config.port
 }
 
-module.exports = Config({
-    cookieSecret: 'myblog',
+module.exports = new Config({
     db: 'qvbe',
     host: '127.0.0.1',
     port: 27017,

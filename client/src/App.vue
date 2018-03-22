@@ -1,12 +1,21 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <div id="main">
+        <Header></Header>
+        <Content></Content>
+    </div>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header'
+import Content from '@/components/Content'
+
 export default {
+  components: {
+    Header,
+    Content
+  },
   name: 'App'
 }
 </script>
@@ -31,5 +40,9 @@ body {
 #app {
   width: 100%;
   height: 100%;
+}
+#main #content {
+  margin: 5px auto;
+  width: 1400px;
 }
 </style>

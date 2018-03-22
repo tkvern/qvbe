@@ -1,19 +1,9 @@
 var https = require('https');
 var querystring = require('querystring');
-var Currency = require('../models/Currency');
+var Ticker = require('../models/Ticker');
 
-exports.index = function (req, res) {
-    // var content = querystring.stringify(data);
-    Currency.get(req.query, function(result) {
-        return res.status(200).json(result);
-     });
-
-    // var options = {
-    //     hostname: 'qube.vip',
-    //     port: 443,
-    //     path: '/api/ticker',
-    //     method: 'GET'
-    // }
+exports.test = function (req, res) {
+    return res.status(200).json(req.query);
 
     // Ticker.get({}, function (err, ticker) {
     //     if (err) {
@@ -42,4 +32,5 @@ exports.index = function (req, res) {
     //     console.error(err);
     // });
     // _req.end();
+    // return res.status(200).json(data);
 }

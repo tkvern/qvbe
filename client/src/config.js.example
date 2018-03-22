@@ -1,0 +1,11 @@
+function Config (config) {
+  return {
+    domain: config.domain
+  }
+}
+
+// When you run the project need Change this config
+// and rename config.js.example to config.js
+module.exports = Config({
+  domain: 'http://192.168.10.69:3000'
+})

@@ -18,3 +18,4 @@ yarn.lock
 *.sln
 .DS_Store
 package-lock.json
+config.js
