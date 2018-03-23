@@ -11,17 +11,15 @@ function Currency(currency) {
 }
 
 // Get data list
-Currency.get = function(query, callback) {
+Currency.index = function(query, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
-
-        db.collection('exchange').find(query).toArray(function (err, currencies) {
+        db.collection('currency').find(query).toArray(function (err, currencies) {
             if (err) throw err
+            client.close();
             return callback(currencies);
         });
-
-        client.close();
     })
 };
 

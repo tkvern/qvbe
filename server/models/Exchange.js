@@ -2,7 +2,7 @@ var MongoClient = require('mongodb').MongoClient,
     settings = require('../settings'),
     assert = require('assert');
 
-    // Construct
+// Construct
 function Exchange(exchange) {
     this.region = exchange.region || "";
     this.name = exchange.name || "";
@@ -14,7 +14,7 @@ function Exchange(exchange) {
 }
 
 // Get data list
-Exchange.get = function(query, callback) {
+Exchange.index = function(query, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
@@ -26,42 +26,30 @@ Exchange.get = function(query, callback) {
     })
 };
 
-// Filter new exchange to collection
-Exchange.cache = function(list, oldlist, callback) {
-    var newExchange = [];
-    list.map(function(exchange) {
-        var exist = false;
-        oldlist.forEach(function (item) {
-            if (exchange['name'] == item['name']) {
-                return exist = true;
-            }
+// Show data single
+Exchange.show = function(symbol, callback) {
+    MongoClient.connect(settings.url, function (err, client) {
+        assert.equal(null, err)
+        const db = client.db(settings.db);
+        db.collection('exchange').findOne({ symbol: symbol }, function (err, exchanges) {
+            if (err) throw err
+            client.close();
+            return callback(exchanges);
         });
-        if (!exist) {
-            var exg = new Exchange({
-                region: exchange.region,
-                name: exchange.name,
-                symbol: exchange.name.toLowerCase(),
-                fiat_money: exchange.fiat_money,
-                number_of_pairs: exchange.number_of_pairs,
-                fee: exchange.fee,
-            })
-            return newExchange.push(exg);
-        }
-    });
+    })
+};
 
-    if (newExchange.length <= 0) {
-        return callback(newExchange);
-    } else {
-        MongoClient.connect(settings.url, function (err, client) {
-            assert.equal(null, err)
-            const db = client.db(settings.db);
-            db.collection('exchange').insert(newExchange, function(err, res) {
-                if (err) throw err
-                client.close();
-                return callback(res);
-            });
+// Filter new exchange to collection
+Exchange.cache = function(newExchange, callback) {
+    MongoClient.connect(settings.url, function (err, client) {
+        assert.equal(null, err)
+        const db = client.db(settings.db);
+        db.collection('exchange').insert(newExchange, function(err, res) {
+            if (err) throw err
+            client.close();
+            return callback(res);
         });
-    }
+    });
 }
 
 module.exports = Exchange;

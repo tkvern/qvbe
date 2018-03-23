@@ -5,14 +5,16 @@ var app = express();
 var ticker = require('../controllers/ticker'),
     exchange = require('../controllers/exchange'),
     currency = require('../controllers/currency'),
-    kline = require('../controllers/kline');
+    kline = require('../controllers/kline'),
+    cache = require('../controllers/cache');
 
 /* Ticker Router */
-router.get('/ticker', ticker.test);
+// router.get('/ticker', ticker.index);
 
 /* Exchange Router */
 router.get('/exchange', exchange.index);
-router.get('/exchange/cache', exchange.cache);
+router.get('/exchange/:symbol', exchange.show);
+router.get('/cache/exchange', cache.exchange);
 
 /* Currency Router */
 router.get('/currency', currency.index);
