@@ -4,7 +4,7 @@ var https = require('https');
     assert = require('assert');
 
 /*
- * cache action
+ * cache exchange action
  * Compare the data needs to update the cache
 */
 exports.exchange = function (req, res) {

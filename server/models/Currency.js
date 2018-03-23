@@ -4,10 +4,10 @@ var MongoClient = require('mongodb').MongoClient,
 
 // Construct
 function Currency(currency) {
-    this.symbol = currency.symbol;
-    this.name = currency.name;
-    this.identity = currency.identity;
-    this.exchange = currency.exchange;
+    this.symbol = currency.symbol || '';
+    this.name = currency.name || '';
+    this.identity = currency.identity || '';
+    this.exchange = currency.exchange || '';
 }
 
 // Get data list

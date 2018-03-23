@@ -4,13 +4,13 @@ var MongoClient = require('mongodb').MongoClient,
 
 // Construct
 function Exchange(exchange) {
-    this.region = exchange.region || "";
-    this.name = exchange.name || "";
-    this.symbol = exchange.symbol || "";
-    this.domain = exchange.domain || "";
-    this.fiat_money = exchange.fiat_money || "";
-    this.number_of_pairs = exchange.number_of_pairs || "";
-    this.fee = exchange.fee || "";
+    this.region = exchange.region || '';
+    this.name = exchange.name || '';
+    this.symbol = exchange.symbol || '';
+    this.domain = exchange.domain || '';
+    this.fiat_money = exchange.fiat_money || '';
+    this.number_of_pairs = exchange.number_of_pairs || '';
+    this.fee = exchange.fee || '';
 }
 
 // Get data list

@@ -4,10 +4,10 @@ var MongoClient = require('mongodb').MongoClient,
 
 // Construct
 function Kline(kline) {
-    this.symbol = kline.symbol;
-    this.name = kline.name;
-    this.identity = kline.identity;
-    this.exchange = kline.exchange;
+    this.symbol = kline.symbol || '';
+    this.name = kline.name || '';
+    this.identity = kline.identity || '';
+    this.exchange = kline.exchange || '';
 }
 
 // Get data list
