@@ -114,21 +114,23 @@ export default {
       }
 
       let currentItems = this.items
-
-      if (!res['data'] || !res.data['list'] || !currentItems || currentItems.length <= 0) {
+      if (!res['data'] || !res.data['list']) {
         return
       }
-      res.data['list'].map(function (item, index, arr) {
-        let diffPrice = item.price_usd - currentItems[index].price_usd
-        if (diffPrice > 0) {
-          item.prcie_change_status = 'up'
-        } else if (diffPrice < 0) {
-          item.prcie_change_status = 'down'
-        } else {
-          item.prcie_change_status = ''
-        }
-        return item
-      })
+      if (!!currentItems && currentItems.length > 0) {
+        res.data['list'] = res.data['list'].map(function (item, index, arr) {
+          let diffPrice = item.price_usd - currentItems[index].price_usd
+          if (diffPrice > 0) {
+            item.prcie_change_status = 'up'
+          } else if (diffPrice < 0) {
+            item.prcie_change_status = 'down'
+          } else {
+            item.prcie_change_status = ''
+          }
+          return item
+        })
+      }
+      console.log(this.items.length)
       if (res.data['list'] !== undefined) {
         this.items = res.data['list']
       }

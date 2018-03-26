@@ -3,23 +3,23 @@ var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
 function Ticker(ticker) {
-    this._id = ticker._id;
+    this._id = ticker.identity;
     this.symbol = ticker.symbol;
     this.name = ticker.name;
-    this.rank = ticker.rank;
-    this.price_usd = ticker.price_usd;
-    this.price_btc = ticker.price_btc;
-    this.market_cap_usd = ticker.market_cap_usd;
-    this.available_supply = ticker.available_supply;
-    this.total_supply = ticker.total_supply;
-    this.max_supply = ticker.max_supply;
-    this['24h_volume_rank'] = ticker['24h_volume_rank'];
-    this['24h_volume_usd'] = ticker['24h_volume_usd'];
-    this.percent_change_1h = ticker.percent_change_1h;
-    this.percent_change_7d = ticker.percent_change_7d;
-    this.percent_change_24h = ticker.percent_change_24h;
-    this.high_price_24h = ticker.high_price_24h;
-    this.low_price_24h = ticker.low_price_24h;
+    this.rank = ticker.rank || 0;
+    this.price_usd = ticker.price_usd || 0;
+    this.price_btc = ticker.price_btc || 0;
+    this.market_cap_usd = ticker.market_cap_usd || 0;
+    this.available_supply = ticker.available_supply || 0;
+    this.total_supply = ticker.total_supply || 0;
+    this.max_supply = ticker.max_supply || 0;
+    this['24h_volume_rank'] = ticker['24h_volume_rank'] || 0;
+    this['24h_volume_usd'] = ticker['24h_volume_usd'] || 0;
+    this.percent_change_1h = ticker.percent_change_1h || 0;
+    this.percent_change_7d = ticker.percent_change_7d || 0;
+    this.percent_change_24h = ticker.percent_change_24h || 0;
+    this.high_price_24h = ticker.high_price_24h || 0;
+    this.low_price_24h = ticker.low_price_24h || 0;
     this.last_updated = ticker.last_updated;
 }
 
@@ -38,7 +38,6 @@ Ticker.index = function(query, options, callback) {
                     price_usd: ticker.price
                 })
             });
-            console.log(tickers)
             client.close();
             return callback(cleanTickers);
         });

@@ -29,10 +29,13 @@ exports.index = function (req, res) {
         limit: 100
     }
     CurrencyInfo.index(queryCurrencyInfo, optionsCurrencyInfo, function(currencies) {
-        console.log(currencies.length);
+        var tickers = currencies.map(function (item) {
+            return new Ticker(item);
+        })
+        console.log(tickers.length);
         return res.status(200).json({
             data: {
-                list: currencies
+                list: tickers
             }
         });
     })

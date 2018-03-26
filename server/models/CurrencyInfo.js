@@ -8,10 +8,10 @@ function CurrencyInfo(currency) {
     this.symbol = currency.symbol || '';
     this.identity = currency.identity || '';
     this.rank = currency.rank || '';
-    this.total_supply = currency.total_supply || '';
-    this.available_supply = currency.available_supply || '';
-    this.max_supply = currency.max_supply || '';
-    this['24h_volume_rank'] = currency['24h_volume_rank'] || '';
+    this.total_supply = currency.total_supply || 0;
+    this.available_supply = currency.available_supply || 0;
+    this.max_supply = currency.max_supply || 0;
+    this['24h_volume_rank'] = currency['24h_volume_rank'] || 0;
 }
 
 // Get data list
