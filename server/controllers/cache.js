@@ -1,5 +1,3 @@
-import { currentId } from 'async_hooks';
-
 var https = require('https');
     querystring = require('querystring'),
     Exchange = require('../models/Exchange'),
@@ -45,24 +43,27 @@ exports.exchange = function (req, res) {
 }
 
 exports.currencyInfo = function (req, res) {
-    CurrencyInfo.index(req.query, function(oldCurrencies) {
+    CurrencyInfo.index(req.query, {}, function(oldCurrencies) {
         latestCurrency(function(ltsCurrencies) {
             var newCurrency = [];
             ltsCurrencies.map(function(currency) {
                 var exist = false;
                 oldCurrencies.forEach(function (item) {
-                    if (currency['name'] == item['name']) {
+                    if (currency['symbol'] == item['symbol']) {
                         return exist = true;
                     }
                 });
                 if (!exist) {
                     var cry = new CurrencyInfo({
-                        region: currency.region,
                         name: currency.name,
-                        symbol: currency.name.toLowerCase(),
-                        fiat_money: currency.fiat_money,
-                        number_of_pairs: currency.number_of_pairs,
-                        fee: currency.fee,
+                        symbol: currency.symbol,
+                        identity: currency['_id'],
+                        rank: currency.rank,
+                        total_supply: currency.total_supply,
+                        available_supply: currency.available_supply,
+                        max_supply: currency.max_supply,
+                        last_updated: currency.last_updated,
+                        '24h_volume_rank' : currency['24h_volume_rank']
                     })
                     return newCurrency.push(cry);
                 }
@@ -70,8 +71,8 @@ exports.currencyInfo = function (req, res) {
             if (newCurrency.length <= 0) {
                 return res.status(200).json(newCurrency);
             } else {
-                CurrencyInfo.cache(CurrencyInfo, function(result) {
-                    return res.status(200).json(result);
+                CurrencyInfo.cache(newCurrency, function(result) {
+                    return res.status(200).json(newCurrency);
                 })
             }
         });
@@ -84,6 +85,32 @@ function latestExchange(callback) {
         hostname: 'qube.vip',
         port: 443,
         path: '/api/exchange',
+        method: 'GET'
+    }
+    var _data = "";
+    var _req = https.request(options, function (_res) {
+        _res.setEncoding('utf-8');
+        _res.on('data', function (chunk) {
+            _data += chunk;
+        });
+        _res.on('end', function () {
+            var data = JSON.parse(_data)
+            callback(data['data']['list'])
+        });
+    });
+    _req.on('error', function (err) {
+        console.error(err);
+    });
+    _req.end();
+}
+
+
+// Get latest currency list
+function latestCurrency(callback) {
+    var options = {
+        hostname: 'qube.vip',
+        port: 443,
+        path: '/api/ticker?page=1&size=1689',
         method: 'GET'
     }
     var _data = "";

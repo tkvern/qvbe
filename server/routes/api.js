@@ -14,7 +14,6 @@ router.get('/ticker', ticker.index);
 /* Exchange Router */
 router.get('/exchange', exchange.index);
 router.get('/exchange/:symbol', exchange.show);
-router.get('/cache/exchange', cache.exchange);
 
 /* Currency Router */
 router.get('/currency', currency.index);
@@ -22,5 +21,9 @@ router.get('/currency/:symbol', currency.show);
 
 /* Kline Router */
 router.get('/kline', kline.index);
+
+/* Cache data */
+router.get('/cache/exchange', cache.exchange);
+router.get('/cache/currencyinfo', cache.currencyInfo);
 
 module.exports = router;

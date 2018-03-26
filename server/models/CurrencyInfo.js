@@ -4,18 +4,22 @@ var MongoClient = require('mongodb').MongoClient,
 
 // Construct
 function CurrencyInfo(currency) {
-    this.symbol = currency.symbol || '';
     this.name = currency.name || '';
+    this.symbol = currency.symbol || '';
     this.identity = currency.identity || '';
-    this.exchange = currency.exchange || '';
+    this.rank = currency.rank || '';
+    this.total_supply = currency.total_supply || '';
+    this.available_supply = currency.available_supply || '';
+    this.max_supply = currency.max_supply || '';
+    this['24h_volume_rank'] = currency['24h_volume_rank'] || '';
 }
 
 // Get data list
-CurrencyInfo.index = function(query, callback) {
+CurrencyInfo.index = function(query, options, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
-        db.collection('currency_info').find(query).toArray(function (err, currencies) {
+        db.collection('currency_info').find(query, options).toArray(function (err, currencies) {
             if (err) throw err
             client.close();
             return callback(currencies);
