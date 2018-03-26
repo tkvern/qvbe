@@ -8,7 +8,8 @@ var https = require('https');
  * Receive query parameters
 */
 exports.index = function (req, res) {
-    Exchange.index(req.query, function(result) {
+    var query = req.query;
+    Exchange.index(query, function(result) {
         return res.status(200).json(result);
     });
 }
@@ -18,7 +19,10 @@ exports.index = function (req, res) {
  * Receive query parameters
 */
 exports.show = function (req, res) {
-    Exchange.show(req.params.symbol, function(result) {
+    var query = {
+        symbol: req.params.symbol
+    }
+    Exchange.show(query, function(result) {
         return res.status(200).json(result);
     });
 }

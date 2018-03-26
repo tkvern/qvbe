@@ -9,7 +9,7 @@ var ticker = require('../controllers/ticker'),
     cache = require('../controllers/cache');
 
 /* Ticker Router */
-// router.get('/ticker', ticker.index);
+router.get('/ticker', ticker.index);
 
 /* Exchange Router */
 router.get('/exchange', exchange.index);
@@ -18,6 +18,7 @@ router.get('/cache/exchange', cache.exchange);
 
 /* Currency Router */
 router.get('/currency', currency.index);
+router.get('/currency/:symbol', currency.show);
 
 /* Kline Router */
 router.get('/kline', kline.index);

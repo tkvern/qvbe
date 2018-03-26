@@ -1,10 +1,12 @@
-// var mongodb = require('./db');
+var MongoClient = require('mongodb').MongoClient,
+    settings = require('../settings'),
+    assert = require('assert');
 
 function Ticker(ticker) {
     this._id = ticker._id;
     this.symbol = ticker.symbol;
     this.name = ticker.name;
-    this.rank = ticker.name;
+    this.rank = ticker.rank;
     this.price_usd = ticker.price_usd;
     this.price_btc = ticker.price_btc;
     this.market_cap_usd = ticker.market_cap_usd;
@@ -21,9 +23,26 @@ function Ticker(ticker) {
     this.last_updated = ticker.last_updated;
 }
 
-// get data list
-Ticker.get = function(name, callback) {
-    
+// Get data list
+// required query, options params
+// If there is not exist, place input {}
+Ticker.index = function(query, options, callback) {
+    MongoClient.connect(settings.url, function (err, client) {
+        assert.equal(null, err)
+        const db = client.db(settings.db);
+        db.collection('tickertime').find(query, options).toArray(function (err, tickers) {
+            if (err) throw err
+            var cleanTickers = tickers.map(function (ticker) {
+                return new Ticker({
+                    _id: ticker._id,
+                    price_usd: ticker.price
+                })
+            });
+            console.log(tickers)
+            client.close();
+            return callback(cleanTickers);
+        });
+    });
 };
 
 module.exports = Ticker;

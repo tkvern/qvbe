@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient,
     assert = require('assert');
 
 // Construct
-function Currency(currency) {
+function CurrencyInfo(currency) {
     this.symbol = currency.symbol || '';
     this.name = currency.name || '';
     this.identity = currency.identity || '';
@@ -11,11 +11,11 @@ function Currency(currency) {
 }
 
 // Get data list
-Currency.index = function(query, callback) {
+CurrencyInfo.index = function(query, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
-        db.collection('currency').find(query).toArray(function (err, currencies) {
+        db.collection('currency_info').find(query).toArray(function (err, currencies) {
             if (err) throw err
             client.close();
             return callback(currencies);
@@ -24,11 +24,11 @@ Currency.index = function(query, callback) {
 };
 
 // Show data single
-Currency.show = function(query, callback) {
+CurrencyInfo.show = function(query, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
-        db.collection('currency').findOne(query, function (err, currency) {
+        db.collection('currency_info').findOne(query, function (err, currency) {
             if (err) throw err
             client.close();
             return callback(currency);
@@ -36,4 +36,17 @@ Currency.show = function(query, callback) {
     });
 };
 
-module.exports = Currency;
+// Filter new currency to collection
+CurrencyInfo.cache = function(newCurrency, callback) {
+    MongoClient.connect(settings.url, function (err, client) {
+        assert.equal(null, err)
+        const db = client.db(settings.db);
+        db.collection('currency_info').insert(newCurrency, function(err, res) {
+            if (err) throw err
+            client.close();
+            return callback(res);
+        });
+    });
+}
+
+module.exports = CurrencyInfo;

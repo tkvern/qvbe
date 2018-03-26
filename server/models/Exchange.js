@@ -23,20 +23,20 @@ Exchange.index = function(query, callback) {
             client.close();
             return callback(exchanges);
         });
-    })
+    });
 };
 
 // Show data single
-Exchange.show = function(symbol, callback) {
+Exchange.show = function(query, callback) {
     MongoClient.connect(settings.url, function (err, client) {
         assert.equal(null, err)
         const db = client.db(settings.db);
-        db.collection('exchange').findOne({ symbol: symbol }, function (err, exchanges) {
+        db.collection('exchange').findOne(query, function (err, exchange) {
             if (err) throw err
             client.close();
-            return callback(exchanges);
+            return callback(exchange);
         });
-    })
+    });
 };
 
 // Filter new exchange to collection

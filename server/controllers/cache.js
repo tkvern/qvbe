@@ -1,6 +1,9 @@
+import { currentId } from 'async_hooks';
+
 var https = require('https');
     querystring = require('querystring'),
     Exchange = require('../models/Exchange'),
+    CurrencyInfo = require('../models/CurrencyInfo'),
     assert = require('assert');
 
 /*
@@ -8,12 +11,12 @@ var https = require('https');
  * Compare the data needs to update the cache
 */
 exports.exchange = function (req, res) {
-    Exchange.index(req.query, function(oldlist) {
-        latestExchange(function(list) {
+    Exchange.index(req.query, function(oldExchanges) {
+        latestExchange(function(ltsExchanges) {
             var newExchange = [];
-            list.map(function(exchange) {
+            ltsExchanges.map(function(exchange) {
                 var exist = false;
-                oldlist.forEach(function (item) {
+                oldExchanges.forEach(function (item) {
                     if (exchange['name'] == item['name']) {
                         return exist = true;
                     }
@@ -34,6 +37,40 @@ exports.exchange = function (req, res) {
                 return res.status(200).json(newExchange);
             } else {
                 Exchange.cache(newExchange, function(result) {
+                    return res.status(200).json(result);
+                })
+            }
+        });
+    });
+}
+
+exports.currencyInfo = function (req, res) {
+    CurrencyInfo.index(req.query, function(oldCurrencies) {
+        latestCurrency(function(ltsCurrencies) {
+            var newCurrency = [];
+            ltsCurrencies.map(function(currency) {
+                var exist = false;
+                oldCurrencies.forEach(function (item) {
+                    if (currency['name'] == item['name']) {
+                        return exist = true;
+                    }
+                });
+                if (!exist) {
+                    var cry = new CurrencyInfo({
+                        region: currency.region,
+                        name: currency.name,
+                        symbol: currency.name.toLowerCase(),
+                        fiat_money: currency.fiat_money,
+                        number_of_pairs: currency.number_of_pairs,
+                        fee: currency.fee,
+                    })
+                    return newCurrency.push(cry);
+                }
+            });
+            if (newCurrency.length <= 0) {
+                return res.status(200).json(newCurrency);
+            } else {
+                CurrencyInfo.cache(CurrencyInfo, function(result) {
                     return res.status(200).json(result);
                 })
             }
